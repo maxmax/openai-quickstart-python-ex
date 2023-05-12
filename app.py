@@ -34,6 +34,34 @@ Names:""".format(
         animal.capitalize()
     )
 
+@app.route("/question", methods=("GET", "POST"))
+def question():
+    if request.method == "POST":
+        question = request.form["question"]
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=question,
+            temperature=0.6,
+        )
+        return redirect(url_for("question", result=response.choices[0].text))
+
+    result = request.args.get("result")
+    return render_template("question.html", result=result)
+
+@app.route("/image", methods=("GET", "POST"))
+def image():
+    if request.method == "POST":
+        image = request.form["image"]
+        response = openai.Image.create(
+            prompt=image,
+            n=1,
+            size="1024x1024"
+        )
+        return redirect(url_for("image", result=response['data'][0]['url']))
+
+    result = request.args.get("result")
+    return render_template("image.html", result=result)
+
 @app.route("/examples")
 def examples():
     return render_template("examples.html")

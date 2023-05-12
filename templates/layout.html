@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+    <title>OpenAI Quickstart Examples - {% block title %}{% endblock %}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <section>
+      <ul class="navigation">
+        <li><a href="/">Create name</a></li>
+        <li><a href="/image">Create image</a></li>
+        <li><a href="/question">Ask a question</a></li>
+        <li><a href="/examples">Examples description</a></li>
+      </ul>
+    </section>
+    <section>{% block content %}{% endblock %}</section>
+  </body>
+</html>

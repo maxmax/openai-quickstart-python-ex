@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Ask a question{% endblock %}
+  {% block content %}
+    <h3>ChatGPT - Ask a question</h3>
+    <form action="/question" method="post">
+      <input type="text" name="question" placeholder="Enter an question" required />
+      <input type="submit" value="Get answer" />
+    </form>
+    {% if result %}
+    <div class="result">{{ result }}</div>
+    {% endif %}
+{% endblock %}
