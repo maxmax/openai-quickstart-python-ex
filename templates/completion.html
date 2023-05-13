@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Create completion{% endblock %}
+  {% block content %}
+    <h3>Create completion</h3>
+    <form action="/completion" method="post">
+      <textarea name="completion" placeholder="Brainstorm some ideas combining AI and simulation of war conflicts" required></textarea>
+      <input type="submit" value="Generate text" />
+    </form>
+    {% if result %}
+    <div class="result">{{ result }}</div>
+    {% endif %}
+{% endblock %}

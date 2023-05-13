@@ -34,6 +34,25 @@ Names:""".format(
         animal.capitalize()
     )
 
+@app.route("/completion", methods=("GET", "POST"))
+def completion():
+    if request.method == "POST":
+        completion = request.form["completion"]
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=completion,
+            temperature=0.6,
+            max_tokens=150,
+            top_p=1,
+            frequency_penalty=1,
+            presence_penalty=1
+        )
+        return redirect(url_for("completion", result=response.choices[0].text))
+
+    result = request.args.get("result")
+    return render_template("completion.html", result=result)
+
+
 @app.route("/question", methods=("GET", "POST"))
 def question():
     if request.method == "POST":
