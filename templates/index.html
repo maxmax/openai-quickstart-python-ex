@@ -2,7 +2,7 @@
 {% block title %}Name my pet{% endblock %}
   {% block content %}
     <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
-    <h3>Name my pet</h3>
+    <h3>Name my pet (with prompt)</h3>
     <form action="/" method="post">
       <input type="text" name="animal" placeholder="Enter an animal" required />
       <input type="submit" value="Generate names" />

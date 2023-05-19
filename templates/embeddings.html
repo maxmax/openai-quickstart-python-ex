@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Create embeddings{% endblock %}
+  {% block content %}
+    <h3>Create embeddings</h3>
+    <form action="/embeddings" method="post">
+      <input type="text" name="embeddings" placeholder="Some data" required>
+      <input type="submit" value="Generate embedding" />
+    </form>
+    {% if result %}
+    <div class="result">{{ result }}</div>
+    {% endif %}
+{% endblock %}

@@ -79,6 +79,14 @@ input[type="submit"] {
   max-width: 320px;
 }
 
+.result pre {
+  white-space: break-spaces;
+  background: black;
+  color: white;
+  padding: 10px 25px;
+  font-size: 12px;
+}
+
 .navigation {
   padding: 0;
   margin: 20px 0;

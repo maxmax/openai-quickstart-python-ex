@@ -1,7 +1,7 @@
 import os
 
 import openai
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, jsonify
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -42,7 +42,7 @@ def completion():
             model="text-davinci-003",
             prompt=completion,
             temperature=0.6,
-            max_tokens=150,
+            max_tokens=2000,
             top_p=1,
             frequency_penalty=1,
             presence_penalty=1
@@ -51,6 +51,41 @@ def completion():
 
     result = request.args.get("result")
     return render_template("completion.html", result=result)
+
+@app.route("/outputcode", methods=("GET", "POST"))
+def outputcode():
+    if request.method == "POST":
+        outputcodeData = request.form["outputcode"]
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=outputcodeData,
+            temperature=0.6,
+            max_tokens=800,
+            top_p=1,
+            frequency_penalty=1,
+            presence_penalty=1
+        )
+        return redirect(url_for("outputcode", result=response.choices[0].text))
+
+    result = request.args.get("result")
+    return render_template("outputcode.html", result=result)
+
+@app.route("/embeddings", methods=("GET", "POST"))
+def embeddings():
+    app.logger.info('testing info EMBEDDINGS log 1')
+    if request.method == "POST":
+        embeddingsData = request.form["embeddings"]
+        app.logger.info('testing info EMBEDDINGS log 2', embeddingsData)
+        response = openai.Embedding.create(
+            model="text-embedding-ada-002",
+            max_tokens=1000,
+            input=embeddingsData,
+        )
+        app.logger.info('testing info EMBEDDINGS log 2', response)
+        return redirect(url_for("embeddings", result=response.data[0].embedding))
+
+    result = request.args.get("result")
+    return render_template("embeddings.html", result=result)
 
 
 @app.route("/question", methods=("GET", "POST"))
@@ -80,6 +115,18 @@ def image():
 
     result = request.args.get("result")
     return render_template("image.html", result=result)
+
+@app.route('/api', methods=['GET'])
+def api():
+    data = [
+        {
+            "id": 0
+        },
+        {
+            "id": 1
+        }
+    ]
+    return jsonify(data)
 
 @app.route("/examples")
 def examples():

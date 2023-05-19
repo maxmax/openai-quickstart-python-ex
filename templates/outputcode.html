@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}Create completion output code{% endblock %}
+  {% block content %}
+    <h3>Output code</h3>
+    <form action="/outputcode" method="post">
+      <textarea name="outputcode" placeholder="what should be written?" required></textarea>
+      <input type="submit" value="Generate code" />
+    </form>
+    {% if result %}
+    <div class="result"><pre><code>{{ result }}</code></pre></div>
+    {% endif %}
+{% endblock %}
